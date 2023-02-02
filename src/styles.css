@@ -1,0 +1,39 @@
+.App {
+  font-family: sans-serif;
+  border: 1px solid gray;
+  width: 400px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  cursor: pointer;
+}
+#top {
+  margin-bottom: 20px;
+  text-align: center;
+}
+input[type="text"] {
+  width: 300px;
+}
+ul {
+  list-style-type: none;
+  width: 305px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  padding-left: 25px;
+}
+li {
+  width: 338px;
+  list-style: none;
+  height: 25px;
+  line-height: 25px;
+  border: 0.5px solid gray;
+  vertical-align: middle;
+  padding: 0 5px;
+}
+input[type="checkbox"] {
+  zoom: 70%;
+}
+#icon {
+  float: right;
+}
