@@ -8,25 +8,26 @@ export default function App() {
     todoList: [
       { id: "001", text: "Playing Game", flag: false },
       { id: "002", text: "Learning React", flag: false },
-      { id: "003", text: "Cooking for Dinner", flag: false }
-    ]
+      { id: "003", text: "Cooking for Dinner", flag: false },
+    ],
   });
   const inputElement = useRef();
   const handleChange = (e) => {
     setState({ ...state, input: e.target.value });
   };
   const addTodo = () => {
-    if (!inputElement) {
+    console.log(inputElement.current.value);
+    if (inputElement.current.value === "") {
+      alert("Please add an todo first");
+    } else {
       setState({
         ...state,
         todoList: [
           ...state.todoList,
-          { id: nanoid(), text: state.input, flag: false }
-        ]
+          { id: nanoid(), text: state.input, flag: false },
+        ],
       });
       inputElement.current.value = "";
-    } else {
-      alert("Please add an todo first");
     }
   };
   const handleDelete = (e) => {
@@ -38,8 +39,20 @@ export default function App() {
     setState({ ...state, todoList: newTodoList });
   };
   const handleCheck = (e) => {
-    console.log(e.target);
+    const { target } = e;
+    const updateTodoList = state.todoList.map((item) => {
+      if (item.id === target.id) {
+        item.flag = !item.flag;
+      }
+      return item;
+    });
+    setState({ ...state, todoList: updateTodoList });
   };
+  const handleClearall = () => {
+    const clearTodoList = state.todoList.slice(0, 0);
+    setState({ ...state, todoList: clearTodoList });
+  };
+
   return (
     <div className="App">
       <div id="wrapper">
@@ -59,6 +72,7 @@ export default function App() {
               <li key={item.id}>
                 <label>
                   <input
+                    id={item.id}
                     type="checkbox"
                     defaultChecked={state.todoList.flag}
                     onChange={handleCheck}
@@ -69,7 +83,7 @@ export default function App() {
                   <DeleteForeverIcon
                     sx={{
                       fontSize: 10,
-                      "&:hover": { color: "blue", fontSize: 14 }
+                      "&:hover": { color: "blue", fontSize: 14 },
                     }}
                     identifier={item.id}
                     onClick={handleDelete}
@@ -80,7 +94,8 @@ export default function App() {
           })}
         </ul>
         <div id="footer">
-          <input type="button" value="Done" />
+          <input type="button" value="Done" onClick={handleDone} />
+          <input type="button" value="Clear All" onClick={handleClearall} />
         </div>
       </div>
     </div>
